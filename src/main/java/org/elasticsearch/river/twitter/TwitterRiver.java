@@ -550,6 +550,23 @@ public class TwitterRiver extends AbstractRiverComponent implements River {
                                     builder.endObject();
                                 }
                             }
+                            for (MediaEntity url : status.getMediaEntities()) {
+                                if (url != null) {
+                                    builder.startObject();
+                                    if (url.getURL() != null) {
+                                        builder.field("url", url.getURL());
+                                    }
+                                    if (url.getDisplayURL() != null) {
+                                        builder.field("display_url", url.getDisplayURL());
+                                    }
+                                    if (url.getExpandedURL() != null) {
+                                        builder.field("expand_url", url.getExpandedURL());
+                                    }
+                                    builder.field("start", url.getStart());
+                                    builder.field("end", url.getEnd());
+                                    builder.endObject();
+                                }
+                            }
                             builder.endArray();
                         }
 
