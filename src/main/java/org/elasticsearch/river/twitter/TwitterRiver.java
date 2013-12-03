@@ -329,6 +329,7 @@ public class TwitterRiver extends AbstractRiverComponent implements River {
                         .startObject("user").startObject("properties").startObject("screen_name").field("type", "string").field("index", "not_analyzed").endObject().endObject().endObject()
                         .startObject("mention").startObject("properties").startObject("screen_name").field("type", "string").field("index", "not_analyzed").endObject().endObject().endObject()
                         .startObject("in_reply").startObject("properties").startObject("user_screen_name").field("type", "string").field("index", "not_analyzed").endObject().endObject().endObject()
+                        .startObject("lang").field("type", "string").endObject()
                         .endObject().endObject().endObject().string();
                 client.admin().indices().prepareCreate(indexName).addMapping(typeName, mapping).execute().actionGet();
             }
@@ -457,6 +458,7 @@ public class TwitterRiver extends AbstractRiverComponent implements River {
                         builder.field("created_at", status.getCreatedAt());
                         builder.field("source", status.getSource());
                         builder.field("truncated", status.isTruncated());
+                        builder.field("lang", status.getIsoLanguageCode());
 
                         if (status.getUserMentionEntities() != null) {
                             builder.startArray("mention");
